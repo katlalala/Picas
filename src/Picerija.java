@@ -5,8 +5,6 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -331,10 +329,10 @@ public class Picerija extends JFrame {
 			numurs++;
 		}
 		
-		JTextArea tekstArea = new JTextArea(teksts.toString());
-		tekstArea.setEditable(false);
+		JTextArea tekstsArea = new JTextArea(teksts.toString());
+		tekstsArea.setEditable(false);
 		
-		JScrollPane scrollPane = new JScrollPane(tekstArea);
+		JScrollPane scrollPane = new JScrollPane(tekstsArea);
 		scrollPane.setPreferredSize(new Dimension(500, 400));
 		
 		JOptionPane.showMessageDialog(this, scrollPane, "Aktīvie Pasūtījumi", JOptionPane.INFORMATION_MESSAGE);
@@ -373,5 +371,23 @@ public class Picerija extends JFrame {
 	
 	private void pasutijumuVesture() {
 		
+		String vesture = DarbsArFailu.nolasit();
+		JTextArea tekstsArea = new JTextArea(vesture);
+		tekstsArea.setEditable(false);
+		
+		JScrollPane scrollPane = new JScrollPane(tekstsArea);
+		scrollPane.setPreferredSize(new Dimension(500, 400));
+		
+		Object[] opcijas = {"Aizvērt", "Izdzēst visu vēsturi"};
+		int izvele = JOptionPane.showOptionDialog(this, scrollPane, "Pasūtījumu vēsture", JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE,  null, opcijas, opcijas[0]);
+		
+		if (izvele == 1) {
+			int apstiprinajums = JOptionPane.showConfirmDialog(this, "Vai tiešām vēlaties izdzēst vēsturi?", "Apstiprinājums", JOptionPane.YES_NO_OPTION);
+			
+			if (apstiprinajums == JOptionPane.YES_OPTION) {
+					DarbsArFailu.iztiritVesturi();
+					pabeigtie.clear();
+			}
+		}
 	}
 }

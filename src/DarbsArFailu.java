@@ -42,4 +42,12 @@ public class DarbsArFailu {
 		
 		return teksts.length() == 0 ? "Nav saglabātu pasūtījumu." : teksts.toString();
 	}
+	
+	public static void iztiritVesturi() {
+		try (FileWriter fw = new FileWriter(failaNosaukums, false)) {
+			JOptionPane.showMessageDialog(null, "Vēsture veiksmīgi izdzēsta.");
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null, "Kļūda tīrot failu.", "Kļūda", JOptionPane.ERROR_MESSAGE);
+		}
+	}
 }
