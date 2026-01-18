@@ -31,12 +31,29 @@ public class Picerija extends JFrame {
 		picuKatalogs = new ArrayList<Pica>();
 		klienti = new ArrayList<Klients>();
 		pasutijumaNumurs = 1001;
-		//pievienotPicas(); vel bus
+		
+		pievienotPicas();
 		izveidotLogu();
 		izveidotPogas();
+		
 		JFrame frame = new JFrame();
         JButton b1 = new JButton();	
 	}
+	
+	private void pievienotPicas() {
+		if (picuKatalogs == null) {
+			picuKatalogs = new ArrayList<Pica>();
+		}
+		picuKatalogs.add(new Pica("Vegetara pica", "Maza", "Siers, Tomāti", "Tomātu mērce", 4.50));
+		picuKatalogs.add(new Pica("Vegetara pica", "Liela", "Siers, Tomāti", "Tomātu mērce", 7.00));
+		
+		picuKatalogs.add(new Pica("Pepperoni", "Maza", "Siers, Pepperoni", "Tomātu mērce", 6.50));
+		picuKatalogs.add(new Pica("Pepperoni", "Liela", "Siers, Pepperoni", "Tomātu mērce", 9.00));
+		
+		picuKatalogs.add(new Pica("Havaju", "Maza", "Siers, Šķiņķis, Ananāsi","Tomātu mērce", 7.50));
+		picuKatalogs.add(new Pica("Havaju", "Liela", "Siers, Šķiņķis, Ananāsi", "Tomātu mērce",  10.00));
+	}
+	
 	
 	// parmaina klasi uz main
 	public static void main(String[] args) {
@@ -92,17 +109,45 @@ public class Picerija extends JFrame {
 		jaunaPoga.setBounds(70, 210, 140, 50); // (x, y, width, height)
 		add(jaunaPoga);
 		
+		jaunaPoga.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				izveidotJaunuPasutijumu();
+			}
+		});
+		
 		JButton skatitPoga = new JButton("Visi pasūtijumi");
 		skatitPoga.setBounds(70, 280, 140, 50); // (x, y, width, height)
 		add(skatitPoga);
+		
+		skatitPoga.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				skatitPasutijumu();
+			}
+		});
 		
 		JButton vesturePoga = new JButton("Vēsture");
 		vesturePoga.setBounds(370, 210, 140, 50); // (x, y, width, height)
 		add(vesturePoga);
 		
+		vesturePoga.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pasutijumuVesture();
+			}
+		});
+		
 		JButton pabeigtiePoga = new JButton("Pabeigtie pasūtijumi");
 		pabeigtiePoga.setBounds(370, 280, 140, 50); // (x, y, width, height)
 		add(pabeigtiePoga);
+		
+		pabeigtiePoga.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				pabeigtiePasutijumi();
+			}
+		});
 		
 		JButton izietPoga = new JButton("Iziet");
 		izietPoga.setBounds(220, 360, 140, 50); // (x, y, width, height)
@@ -118,4 +163,165 @@ public class Picerija extends JFrame {
 			}
 		});
 	}
+	
+	private void izveidotJaunuPasutijumu() {
+
+		try {
+			if (picuKatalogs.isEmpty()) {
+				JOptionPane.showMessageDialog(this, "Katalogs ir tukšs.");
+				return;
+			}
+			
+			String[] picuTeksti = new String[picuKatalogs.size()];
+			for (int i = 0; i < picuKatalogs.size(); i++) {
+				Pica p = picuKatalogs.get(i);
+				picuTeksti[i] = p.getNosaukums() + " (" + p.getLielums() + ") - €" + p.getCena();
+			}
+			
+			String izveletaTeksts = (String) JOptionPane.showInputDialog(this, "Izvēlieties picu:", "Pica", JOptionPane.PLAIN_MESSAGE, null, picuTeksti, picuTeksti[0]);
+			
+			if (izveletaTeksts == null) {
+				return;
+			}
+			
+			Pica izveletaPica = null;
+			for (int i = 0; i < picuKatalogs.size(); i++) {
+				if (picuTeksti[i].equals(izveletaTeksts)) {
+					izveletaPica = picuKatalogs.get(i);
+					break;
+				}
+			}
+			
+			if (izveletaPica == null) {
+				JOptionPane.showMessageDialog(this, "Pica nav atrasta!");
+				return;
+			}
+			
+			// PIEDEVAS
+			double kopejaCena = izveletaPica.getCena();
+			String[] piedevas = {"Nav", "Pepperoni (+€2.00)", "Salami (+€1.50)", "Sēnes (+€0.50)", "Tomāti (+€0.99)"};
+			String piedevasIzvele = (String) JOptionPane.showInputDialog(this, "Papildus piedevas?", "Piedevas", JOptionPane.PLAIN_MESSAGE, null, piedevas, piedevas[0]);
+			
+			if(piedevasIzvele == null) {
+				return;
+			}
+			
+			String piedavasTeksts = "Nav";
+			if (piedevasIzvele.contains("Pepperoni")) {
+				kopejaCena = kopejaCena + 2.00;
+				piedavasTeksts = "Pepperoni";
+				
+			} else if (piedevasIzvele.contains("Salami")) {
+				kopejaCena = kopejaCena + 1.50;
+				piedavasTeksts = "Salami";
+				
+			} else if (piedevasIzvele.contains("Sēnes")) {
+				kopejaCena = kopejaCena + 0.50;
+				piedavasTeksts = "Sēnes";
+				
+			} else if (piedevasIzvele.contains("Tomāti")) {
+				kopejaCena = kopejaCena + 0.99;
+				piedavasTeksts = "Tomāti";
+			}
+			
+			// DZERIENII
+			String[] dzerieni = {"Nav", "Cola (+€2.00)", "Sprite (+€2.00)", "Fanta (+€2.00)", "Ūdens (+€1.00)"};
+			String dzeriensIzvele = (String) JOptionPane.showInputDialog(this, "Dzēriens?", "Dzēriens", JOptionPane.PLAIN_MESSAGE, null, dzerieni, dzerieni[0]);
+			if (dzeriensIzvele == null) {
+				return;
+			}
+			
+			String dzerienaTeksts = "Nekas";
+			if (dzeriensIzvele.contains("Cola")) {
+				kopejaCena = kopejaCena + 2.00;
+				dzerienaTeksts = "Cola";
+				
+			} else if (dzeriensIzvele.contains("Sprite")) {
+				kopejaCena = kopejaCena + 2.00;
+				dzerienaTeksts = "Fanta";
+				
+			} else if (dzeriensIzvele.contains("Fanta")) {
+				kopejaCena = kopejaCena + 2.00;
+				dzerienaTeksts = "Fanta";
+				
+			} else if (dzeriensIzvele.contains("Ūdens")) {
+				kopejaCena = kopejaCena + 1.00;
+				dzerienaTeksts = "Ūdens";
+			}
+			
+			int atbilde = JOptionPane.showConfirmDialog(this, "Vai sūtīsiet ar piegādi? (+€5.00)", "Piegāde", JOptionPane.YES_NO_OPTION);
+	        boolean irPiegade = (atbilde == JOptionPane.YES_OPTION);
+			
+			Klients klients = null;
+			
+			if (irPiegade) {
+				kopejaCena = kopejaCena += 5.00;
+
+				String vards = JOptionPane.showInputDialog(this, "Vārds:");
+				if (vards == null || vards.trim().isEmpty()) {
+					JOptionPane.showMessageDialog(this, "Nav ievadīts vārds!");
+					return;
+				}
+				
+				String telefons = JOptionPane.showInputDialog(this, "Telefons:");
+				if (telefons == null || telefons.trim().isEmpty()) {
+					JOptionPane.showMessageDialog(this, "Nav ievadīts telefons!");
+					return;
+				}
+				
+				String adrese = JOptionPane.showInputDialog(this, "Adrese:");
+				if (adrese == null || adrese.trim().isEmpty()) {
+					JOptionPane.showMessageDialog(this, "Nav ievadīta adrese!");
+					return;
+				}
+				
+				klients = new Klients(vards, telefons, adrese, true);
+				klienti.add(klients); 
+				
+			}
+			
+			String pasutijums = "PASŪTĪJUMS #" + pasutijumaNumurs + "\n";
+			pasutijums += "===================\n";
+			pasutijums += "Pica: " + izveletaPica.getNosaukums() + "\n";
+			pasutijums += "Lielums: " + izveletaPica.getLielums() + "\n";
+			pasutijums += "Mērce: " + izveletaPica.getMerces() + "\n";
+			pasutijums += "Papildus: " + piedavasTeksts + "\n";
+			pasutijums += "Dzēriens: " + dzerienaTeksts + "\n";
+			
+			if (irPiegade && klients != null) {
+				pasutijums += "-------------------\n";
+				pasutijums += "Piegāde klientam: " + klients.getVards() + "\n";
+				pasutijums += "Telefons: " + klients.getTelefons() + "\n";
+				pasutijums += "Adrese: " + klients.getAdrese() + "\n";
+			} else {
+				pasutijums += "-------------------\nPaņems uz vietas\n";
+			}
+			
+			pasutijums += "-------------------\n";
+			pasutijums += "CENA: €" + String.format("%.2f", kopejaCena) + "\n";
+			pasutijums += "===================";
+			
+			aktiviePasutijumi.offer(pasutijums);
+			pasutijumaNumurs++;
+			
+			JOptionPane.showMessageDialog(this, "Pasūtījums izveidots!\n\n" + pasutijums);
+			
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, "Kļūda: " + e.getMessage());
+			e.printStackTrace();
+	}
+}
+
+	private void skatitPasutijumu() {
+		
+	}
+	
+	private void pasutijumuVesture() {
+		
+	}
+	
+	private void pabeigtiePasutijumi() {
+		
+	}
+	
 }

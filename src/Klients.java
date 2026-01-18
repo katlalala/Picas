@@ -5,16 +5,15 @@ import javax.swing.JOptionPane;
 public class Klients {
 
 		// ATRIBUTI
-	private int telNr;
-	private String vards, adrese;
-	private boolean vaiAdrese;
+	private String vards, adrese, telefons;
+	private boolean vaiPiegadi;
 			
 			// KONSTRUKTORS
-		public Klients(String vards, boolean vaiAdrese, String adrese, int telefonaNr) {
+		public Klients(String vards, String telefons, String adrese, boolean vaiPiegadi) {
 			this.vards = vards;
 			this.adrese = adrese;
-			this.vaiAdrese = vaiAdrese;
-			this.telNr = telNr;
+			this.vaiPiegadi = vaiPiegadi;
+			this.telefons = telefons;
 			
 			}
 			// METODES
@@ -22,26 +21,26 @@ public class Klients {
 				return vards;
 			}
 			
-			public void setVards(String vards) {
-				this.vards = vards;
+//			public void setVards(String vards) {
+//				this.vards = vards;
+//			}
+			
+			public boolean vaiPiegadi() {
+				return vaiPiegadi;
 			}
 			
-			public boolean isVaiAdrese() {
-				return vaiAdrese;
-			}
-			
-			public void setVaiAdrese(boolean vaiAdrese) {
-				this.vaiAdrese = vaiAdrese;
-			}
 			
 			public String getAdrese() {
 				return adrese;
 			}
 			
-			public void setAdrese(String adrese) {
-				this.adrese = adrese;
-			}
+//			public void setAdrese(String adrese) {
+//				this.adrese = adrese;
+//			}
 			
+			public String getTelefons() {
+				return telefons;
+			}
 			
 			/*
 			

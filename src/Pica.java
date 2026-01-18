@@ -1,16 +1,16 @@
 class Pica {
 	
 		// ATRIBUTI
-		private double cena, lielums;
-		private String nosaukums, piedevas, merces;
+		private double cena;
+		private String nosaukums, piedevas, merces, lielums;
 			
 			// KONSTRUKTORS
-		public Pica(String nosaukums, double lielums, String piedevas, String merces) {
+		public Pica(String nosaukums, String lielums, String piedevas, String merces, double cena) {
 			this.nosaukums = nosaukums;
 			this.lielums = lielums;
 			this.piedevas = piedevas;
 			this.merces = merces;
-			this.cena = 0.0;
+			this.cena = cena;
 
 		}
 			// METODES
@@ -21,7 +21,7 @@ class Pica {
 		}
 			
 			// case 1
-			public double getLielums() {
+			public String getLielums() {
 				return lielums;
 		}
 			
