@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -13,6 +14,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
@@ -30,7 +33,7 @@ public class Picerija extends JFrame {
 		pabeigtie = new ArrayList<String>();
 		picuKatalogs = new ArrayList<Pica>();
 		klienti = new ArrayList<Klients>();
-		pasutijumaNumurs = 1001;
+		pasutijumaNumurs = 1;
 		
 		pievienotPicas();
 		izveidotLogu();
@@ -313,7 +316,28 @@ public class Picerija extends JFrame {
 }
 
 	private void skatitPasutijumu() {
+		if (aktiviePasutijumi.isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Pašlaik nav aktīvu pasūtījumu.", "Aktīvie Pasūtījumi", JOptionPane.INFORMATION_MESSAGE);
+			return;
+		}
 		
+		StringBuilder teksts = new StringBuilder();
+		teksts.append("AKTĪVIE PASŪTĪJUMI (" + aktiviePasutijumi.size() + "):\n\n");
+		
+		int numurs = 1;
+		for (String pasutijums : aktiviePasutijumi) {
+			teksts.append("--- Pasūtījums Nr.").append(numurs).append(" ---\n");
+			teksts.append(pasutijums).append("\n\n");
+			numurs++;
+		}
+		
+		JTextArea tekstArea = new JTextArea(teksts.toString());
+		tekstArea.setEditable(false);
+		
+		JScrollPane scrollPane = new JScrollPane(tekstArea);
+		scrollPane.setPreferredSize(new Dimension(500, 400));
+		
+		JOptionPane.showMessageDialog(this, scrollPane, "Aktīvie Pasūtījumi", JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	private void pasutijumuVesture() {
