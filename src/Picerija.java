@@ -26,6 +26,21 @@ public class Picerija extends JFrame {
 	
 	private int pasutijumaNumurs;
 	
+	static String virknesParbaude(String zinojums, String nokl) {
+		String ievade;
+		
+		do {
+			ievade = JOptionPane.showInputDialog(null, zinojums, nokl);
+			
+			if(ievade == null)
+			return null;
+			
+			ievade = ievade.trim();
+		} while(ievade.isEmpty());
+		
+		return ievade;
+	}
+	
 	public Picerija() {
 		aktiviePasutijumi = new ArrayList<String>();
 		pabeigtie = new ArrayList<String>();
@@ -258,23 +273,20 @@ public class Picerija extends JFrame {
 			if (irPiegade) {
 				kopejaCena = kopejaCena += 5.00;
 
-				String vards = JOptionPane.showInputDialog(this, "Vārds:");
-				if (vards == null || vards.trim().isEmpty()) {
-					JOptionPane.showMessageDialog(this, "Nav ievadīts vārds!");
+				String vards = virknesParbaude("Ievadiet klienta vārdu:", "Maikls Aftons");
+				if (vards == null)
 					return;
-				}
 				
-				String telefons = JOptionPane.showInputDialog(this, "Telefons:");
-				if (telefons == null || telefons.trim().isEmpty()) {
-					JOptionPane.showMessageDialog(this, "Nav ievadīts telefons!");
-					return;
-				}
 				
-				String adrese = JOptionPane.showInputDialog(this, "Adrese:");
-				if (adrese == null || adrese.trim().isEmpty()) {
-					JOptionPane.showMessageDialog(this, "Nav ievadīta adrese!");
+				String telefons = virknesParbaude("Ievadiet tālruņa numuru:", "+ 371 19831987");
+				if (telefons == null)
 					return;
-				}
+				
+			
+				String adrese = virknesParbaude("Ievadiet piegādes adresi:", "Ventspils iela 51");
+				if (adrese == null)
+					return;
+				
 				
 				klients = new Klients(vards, telefons, adrese, true);
 				klienti.add(klients); 
