@@ -6,22 +6,45 @@ public class Klients {
 
 		// ATRIBUTI
 	private int telNr;
-	private String vards, adrese, pasutijums;
+	private String vards, adrese;
 	private boolean vaiAdrese;
 			
 			// KONSTRUKTORS
-		public Klients(int telNr, int pasutijumaNr, String vards, String adrese, boolean vaiAdrese) {
+		public Klients(String vards, boolean vaiAdrese, String adrese, int telefonaNr) {
 			this.vards = vards;
 			this.adrese = adrese;
 			this.vaiAdrese = vaiAdrese;
 			this.telNr = telNr;
-			this.pasutijums = 0;
-		}
+			
+			}
 			// METODES
-		
 			public String getVards() {
 				return vards;
-		}
+			}
+			
+			public void setVards(String vards) {
+				this.vards = vards;
+			}
+			
+			public boolean isVaiAdrese() {
+				return vaiAdrese;
+			}
+			
+			public void setVaiAdrese(boolean vaiAdrese) {
+				this.vaiAdrese = vaiAdrese;
+			}
+			
+			public String getAdrese() {
+				return adrese;
+			}
+			
+			public void setAdrese(String adrese) {
+				this.adrese = adrese;
+			}
+			
+			
+			/*
+			
 			// papildinaas
 		public void info() {
 			JOptionPane.showMessageDialog(null,
@@ -41,6 +64,7 @@ public class Klients {
 			} else
 				JOptionPane.showMessageDialog(null, "Grāmata nav pieejama, visi eksemplāri paņemti.", "Brīdinājums", JOptionPane.WARNING_MESSAGE);
 			}
+			*/
 		}
 
 

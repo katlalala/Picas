@@ -5,12 +5,12 @@ class Pica {
 		private String nosaukums, piedevas, merces;
 			
 			// KONSTRUKTORS
-		public Pica(double cena, double lielums, String nosaukums, String piedevas, String merces) {
+		public Pica(String nosaukums, double lielums, String piedevas, String merces) {
 			this.nosaukums = nosaukums;
 			this.lielums = lielums;
 			this.piedevas = piedevas;
 			this.merces = merces;
-			this.cena = cena;
+			this.cena = 0.0;
 
 		}
 			// METODES
@@ -39,6 +39,15 @@ class Pica {
 			public double getCena() {
 				return cena;
 		}
+			
+			String nolasitAtributus() {
+				return "Pasūtītā pica: " + nosaukums +
+						"Picas lielums: " + lielums +
+						"Pievienotās piedevas: " + piedevas +
+						"Pievienotā mērce: " + merces +
+						"Cena: " + cena;
+			}
+			
 			// nav pabeigts
 			
 			/*
