@@ -1,53 +1,45 @@
-
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.ScrollPaneConstants;
 
 public class DarbsArFailu {
 	
 	static String failaNosaukums = "pasutijumu_vesture.txt";
 	
-	public void saglabat(String teksts) {
-	try {	
-		FileWriter fw = new FileWriter(failaNosaukums, true);
-		PrintWriter pw = new PrintWriter(fw);
-		pw.println(Pica.nolasitAtributus()); // jauzlabo
-		pw.println("++++++++++++++++++++++++++\n");
-		pw.close();
-		JOptionPane.showMessageDialog(null, "Ierakstīts failā: "+failaNosaukums);
+	public static void saglabatPasutijumu(String pasutijums) {
+		try (FileWriter fw = new FileWriter(failaNosaukums, true);
+			 PrintWriter pw = new PrintWriter(fw)) {
+			
+			pw.println(pasutijums);
+			pw.println("----------------------------------------");
+			
+			
+		} catch(IOException e){
+			JOptionPane.showMessageDialog(null, "Kļūda ierakstot failā.", "Kļūda", JOptionPane.ERROR_MESSAGE);
+	}
+}
+	
+	public static String nolasit() {
+		StringBuilder teksts =new StringBuilder();
+		File fails = new File(failaNosaukums);
 		
-	}catch(IOException e){
-		JOptionPane.showMessageDialog(null, "Kļūda ierakstot failā!", "kļūda", JOptionPane.ERROR_MESSAGE);
-	}
-	}
-	
-	static void nolasit() {
-		String teksts, str = "";
-		try {
-			FileReader fr = new FileReader(failaNosaukums);
-			BufferedReader br = new BufferedReader(fr);
-			while((teksts = br.readLine()) != null) {
-				str += teksts+"\n";
-			}
-			br.close();
-			
-			JTextArea ta = new JTextArea(str, 10, 40);
-			ta.setEditable(false);
-			JScrollPane sp = new JScrollPane(ta);
-			sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-			JOptionPane.showMessageDialog(ta, sp, "Saglabātie kaķi", JOptionPane.PLAIN_MESSAGE);
-			
-		}catch(IOException e) {
-			JOptionPane.showMessageDialog(null, "Kļūda ierakstot failā!", "kļūda", JOptionPane.ERROR_MESSAGE);
+		if (!fails.exists()) {
+			return "Fails neeksistē.";
 		}
+		
+		try (BufferedReader br = new BufferedReader(new FileReader(fails))) {
+			String rinda;
+			while ((rinda = br.readLine()) != null) {
+				teksts.append(rinda).append("\n");
+			}
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null, "Kļūda lasot failu.", "Kļūda", JOptionPane.ERROR_MESSAGE);
+		}
+		
+		return teksts.length() == 0 ? "Nav saglabātu pasūtījumu." : teksts.toString();
 	}
-	
-	
 }

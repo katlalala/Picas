@@ -1,0 +1,82 @@
+PASŪTĪJUMS #1
+===================
+Pica: Vegetara pica
+Lielums: Maza
+Mērce: Tomātu mērce
+Papildus: Nav
+Dzēriens: Nekas
+-------------------
+Paņemts uz vietas
+-------------------
+CENA: €4.50
+===================
+----------------------------------------
+PASŪTĪJUMS #1
+===================
+Pica: Vegetara pica
+Lielums: Maza
+Mērce: Tomātu mērce
+Papildus: Nav
+Dzēriens: Nekas
+-------------------
+Paņemts uz vietas
+-------------------
+CENA: €4.50
+===================
+----------------------------------------
+PASŪTĪJUMS #2
+===================
+Pica: Vegetara pica
+Lielums: Maza
+Mērce: Tomātu mērce
+Papildus: Nav
+Dzēriens: Nekas
+-------------------
+Paņemts uz vietas
+-------------------
+CENA: €4.50
+===================
+----------------------------------------
+PASŪTĪJUMS #3
+===================
+Pica: Vegetara pica
+Lielums: Maza
+Mērce: Tomātu mērce
+Papildus: Nav
+Dzēriens: Nekas
+-------------------
+Piegāde klientam: 12
+Telefons: 21
+Adrese: 12
+-------------------
+CENA: €9.50
+===================
+----------------------------------------
+PASŪTĪJUMS #2
+===================
+Pica: Vegetara pica
+Lielums: Maza
+Mērce: Tomātu mērce
+Papildus: Salami
+Dzēriens: Nekas
+-------------------
+Piegāde klientam: 1
+Telefons: 1
+Adrese: 1
+-------------------
+CENA: €11.00
+===================
+----------------------------------------
+PASŪTĪJUMS #2
+===================
+Pica: Havaju
+Lielums: Maza
+Mērce: Tomātu mērce
+Papildus: Nav
+Dzēriens: Nekas
+-------------------
+Paņemts uz vietas
+-------------------
+CENA: €7.50
+===================
+----------------------------------------

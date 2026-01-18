@@ -21,7 +21,7 @@ import javax.swing.SwingUtilities;
 
 // prototips voaaavvvv
 public class Picerija extends JFrame {
-	private Queue<String> aktiviePasutijumi;
+	private ArrayList<String> aktiviePasutijumi;
 	private ArrayList<String> pabeigtie;
 	private ArrayList<Pica> picuKatalogs;
 	private ArrayList<Klients> klienti;
@@ -29,7 +29,7 @@ public class Picerija extends JFrame {
 	private int pasutijumaNumurs;
 	
 	public Picerija() {
-		aktiviePasutijumi = new LinkedList<String>();
+		aktiviePasutijumi = new ArrayList<String>();
 		pabeigtie = new ArrayList<String>();
 		picuKatalogs = new ArrayList<Pica>();
 		klienti = new ArrayList<Klients>();
@@ -141,14 +141,14 @@ public class Picerija extends JFrame {
 			}
 		});
 		
-		JButton pabeigtiePoga = new JButton("Pabeigtie pasūtijumi");
+		JButton pabeigtiePoga = new JButton("Pabeigt pasūtijumu");
 		pabeigtiePoga.setBounds(370, 280, 140, 50); // (x, y, width, height)
 		add(pabeigtiePoga);
 		
 		pabeigtiePoga.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				pabeigtiePasutijumi();
+				pabeigtPasutijumu();
 			}
 		});
 		
@@ -297,14 +297,14 @@ public class Picerija extends JFrame {
 				pasutijums += "Telefons: " + klients.getTelefons() + "\n";
 				pasutijums += "Adrese: " + klients.getAdrese() + "\n";
 			} else {
-				pasutijums += "-------------------\nPaņems uz vietas\n";
+				pasutijums += "-------------------\nPaņemts uz vietas\n";
 			}
 			
 			pasutijums += "-------------------\n";
 			pasutijums += "CENA: €" + String.format("%.2f", kopejaCena) + "\n";
 			pasutijums += "===================";
 			
-			aktiviePasutijumi.offer(pasutijums);
+			aktiviePasutijumi.add(pasutijums);
 			pasutijumaNumurs++;
 			
 			JOptionPane.showMessageDialog(this, "Pasūtījums izveidots!\n\n" + pasutijums);
@@ -317,7 +317,7 @@ public class Picerija extends JFrame {
 
 	private void skatitPasutijumu() {
 		if (aktiviePasutijumi.isEmpty()) {
-			JOptionPane.showMessageDialog(this, "Pašlaik nav aktīvu pasūtījumu.", "Aktīvie Pasūtījumi", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Pašlaik nav aktīvu pasūtījumu.", "Informācija", JOptionPane.INFORMATION_MESSAGE);
 			return;
 		}
 		
@@ -340,12 +340,38 @@ public class Picerija extends JFrame {
 		JOptionPane.showMessageDialog(this, scrollPane, "Aktīvie Pasūtījumi", JOptionPane.INFORMATION_MESSAGE);
 	}
 	
+	private void pabeigtPasutijumu() {
+		if (aktiviePasutijumi.isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Nav pasūtījumu, ko pabeigt!", "Brīdinājums", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		
+		String[] izveles = new String[aktiviePasutijumi.size()];
+		for (int i = 0; i < aktiviePasutijumi.size(); i++) {
+			izveles[i] = aktiviePasutijumi.get(i).split("\n")[0];
+		}
+		
+		String izvele = (String) JOptionPane.showInputDialog(this, "Kuru pasūtījumu vēlaties pabeigt?", "Pabeigt pasūtījumu", JOptionPane.QUESTION_MESSAGE, null, izveles, izveles[0]);
+		
+		if (izvele != null) {
+			int indekss = -1;
+			for (int i = 0; i < izveles.length; i++) {
+				if (izveles[i].equals(izvele)) {
+					indekss = i;
+					break;
+				}
+			}
+			
+			if (indekss != -1) {
+				String pabeigtais = aktiviePasutijumi.remove(indekss);
+				pabeigtie.add(pabeigtais);
+				DarbsArFailu.saglabatPasutijumu(pabeigtais);
+				JOptionPane.showMessageDialog(this, "Pasūtījums pabeigts, dabūsi veselus bonusa 10 centus algā.");
+			}
+		}	
+	}
+	
 	private void pasutijumuVesture() {
 		
 	}
-	
-	private void pabeigtiePasutijumi() {
-		
-	}
-	
 }
