@@ -85,14 +85,14 @@ public class Picerija extends JFrame {
 		if (picuKatalogs == null) {
 			picuKatalogs = new ArrayList<Pica>();
 		}
-		picuKatalogs.add(new Pica("Vegetara pica", "Maza", "Siers, Tomāti", "Tomātu mērce", 4.50));
-		picuKatalogs.add(new Pica("Vegetara pica", "Liela", "Siers, Tomāti", "Tomātu mērce", 7.00));
+		picuKatalogs.add(new Pica("Vegetara pica", "Maza", "Siers, Tomāti", "Tomātu mērce", "Frī kartupeļi", 4.50));
+		picuKatalogs.add(new Pica("Vegetara pica", "Liela", "Siers, Tomāti", "Tomātu mērce", "Frī kartupeļi", 7.00));
 		
-		picuKatalogs.add(new Pica("Pepperoni", "Maza", "Siers, Pepperoni", "Tomātu mērce", 6.50));
-		picuKatalogs.add(new Pica("Pepperoni", "Liela", "Siers, Pepperoni", "Tomātu mērce", 9.00));
+		picuKatalogs.add(new Pica("Pepperoni", "Maza", "Siers, Pepperoni", "Tomātu mērce", "Frī kartupeļi", 6.50));
+		picuKatalogs.add(new Pica("Pepperoni", "Liela", "Siers, Pepperoni", "Tomātu mērce", "Frī kartupeļi", 9.00));
 		
-		picuKatalogs.add(new Pica("Havaju", "Maza", "Siers, Šķiņķis, Ananāsi","Tomātu mērce", 7.50));
-		picuKatalogs.add(new Pica("Havaju", "Liela", "Siers, Šķiņķis, Ananāsi", "Tomātu mērce",  10.00));
+		picuKatalogs.add(new Pica("Havaju", "Maza", "Siers, Šķiņķis, Ananāsi","Tomātu mērce", "Frī kartupeļi", 7.50));
+		picuKatalogs.add(new Pica("Havaju", "Liela", "Siers, Šķiņķis, Ananāsi", "Tomātu mērce", "Frī kartupeļi",  10.00));
 	}
 	
 	
@@ -220,7 +220,7 @@ public class Picerija extends JFrame {
 				picuTeksti[i] = p.getNosaukums() + " (" + p.getLielums() + ") - €" + p.getCena();
 			}
 			
-			String izveletaTeksts = (String) JOptionPane.showInputDialog(this, "Izvēlieties picu:", "Pica", JOptionPane.PLAIN_MESSAGE, null, picuTeksti, picuTeksti[0]);
+			String izveletaTeksts = (String) JOptionPane.showInputDialog(this, "Izvēlieties picu:", "Picu izvēlne", JOptionPane.PLAIN_MESSAGE, null, picuTeksti, picuTeksti[0]);
 			
 			if (izveletaTeksts == null) {
 				return;
@@ -242,7 +242,7 @@ public class Picerija extends JFrame {
 			// PIEDEVAS
 			double kopejaCena = izveletaPica.getCena();
 			String[] piedevas = {"Nav", "Pepperoni (+€2.00)", "Salami (+€1.50)", "Sēnes (+€0.50)", "Tomāti (+€0.99)"};
-			String piedevasIzvele = (String) JOptionPane.showInputDialog(this, "Papildus piedevas?", "Piedevas", JOptionPane.PLAIN_MESSAGE, null, piedevas, piedevas[0]);
+			String piedevasIzvele = (String) JOptionPane.showInputDialog(this, "Papildus piedevas?", "Piedevu izvēlne", JOptionPane.PLAIN_MESSAGE, null, piedevas, piedevas[0]);
 			
 			if(piedevasIzvele == null) {
 				return;
@@ -268,7 +268,7 @@ public class Picerija extends JFrame {
 			
 			// DZERIENII
 			String[] dzerieni = {"Nav", "Cola (+€2.00)", "Sprite (+€2.00)", "Fanta (+€2.00)", "Ūdens (+€1.00)"};
-			String dzeriensIzvele = (String) JOptionPane.showInputDialog(this, "Dzēriens?", "Dzēriens", JOptionPane.PLAIN_MESSAGE, null, dzerieni, dzerieni[0]);
+			String dzeriensIzvele = (String) JOptionPane.showInputDialog(this, "Dzēriens?", "Dzērienu izvēlne", JOptionPane.PLAIN_MESSAGE, null, dzerieni, dzerieni[0]);
 			if (dzeriensIzvele == null) {
 				return;
 			}
@@ -291,6 +291,32 @@ public class Picerija extends JFrame {
 				dzerienaTeksts = "Ūdens";
 			}
 			
+			// UZKODAS
+			String[] uzkodas = {"Nav", "Frī kartupeļi (+€1.00)", "Vistas nageti (+€1.70)", "Ābolu šķēles (+€0.80)", "Sīpolu gredzeni (+€2.50)"};
+			String uzkodasIzvele = (String) JOptionPane.showInputDialog(this, "Uzkodas?", "Uzkodas izvēlne", JOptionPane.PLAIN_MESSAGE, null, uzkodas, uzkodas[0]);
+			if (uzkodasIzvele == null) {
+				return;
+			}
+			
+			String uzkodasTeksts = "Nekas";
+			if (uzkodasIzvele.contains("Frī kartupeļi")) {
+				kopejaCena = kopejaCena + 1.00;
+				uzkodasTeksts = "Frī kartupeļi";
+				
+			} else if (uzkodasIzvele.contains("Vistas nageti")) {
+				kopejaCena = kopejaCena + 1.70;
+				uzkodasTeksts = "Vistas nageti";
+				
+			} else if (uzkodasIzvele.contains("Ābolu šķēles")) {
+				kopejaCena = kopejaCena + 0.80;
+				uzkodasTeksts = "Ābolu šķēles";
+				
+			} else if (uzkodasIzvele.contains("Sīpolu gredzeni")) {
+				kopejaCena = kopejaCena + 2.50;
+				uzkodasTeksts = "Sīpolu gredzeni";
+			}
+			
+			// PIEGADE
 			int atbilde = JOptionPane.showConfirmDialog(this, "Vai sūtīsiet ar piegādi? (+€5.00)", "Piegāde", JOptionPane.YES_NO_OPTION);
 	        boolean irPiegade = (atbilde == JOptionPane.YES_OPTION);
 			
@@ -326,6 +352,7 @@ public class Picerija extends JFrame {
 			pasutijums += "Mērce: " + izveletaPica.getMerces() + "\n";
 			pasutijums += "Papildus: " + piedavasTeksts + "\n";
 			pasutijums += "Dzēriens: " + dzerienaTeksts + "\n";
+			pasutijums += "Uzkodas: " + uzkodasTeksts + "\n";
 			
 			if (irPiegade && klients != null) {
 				pasutijums += "-------------------\n";
