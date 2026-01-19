@@ -6,6 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -40,6 +43,28 @@ public class Picerija extends JFrame {
 		
 		return ievade;
 	}
+	
+	public void atskanotSkanu(String failaCels, boolean vaiAtkartot) {
+		try {
+			java.net.URL url = Picerija.class.getResource(failaCels);
+			if (url == null) {
+				System.err.println("Kļūda: Fails nav atrasts - " + failaCels);
+				return;
+			}
+			
+			AudioInputStream ais = AudioSystem.getAudioInputStream(url);
+			Clip clip = AudioSystem.getClip();
+			clip.open(ais);
+			
+			if (vaiAtkartot) {
+				clip.loop(Clip.LOOP_CONTINUOUSLY);
+			}
+			
+			clip.start();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Audio kļūda: " + e.getMessage(), "Info", JOptionPane.INFORMATION_MESSAGE);
+	}
+}
 	
 	public Picerija() {
 		aktiviePasutijumi = new ArrayList<String>();
@@ -82,6 +107,7 @@ public class Picerija extends JFrame {
 }
 	// JFRAME IZVEIDE + UI
 	private void izveidotLogu() {
+		atskanotSkanu("/skanas/menu.wav", true);
 		setTitle("Picērija");
 		setSize(600, 500);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -317,6 +343,7 @@ public class Picerija extends JFrame {
 			aktiviePasutijumi.add(pasutijums);
 			pasutijumaNumurs++;
 			
+			atskanotSkanu("/skanas/pizza.wav", false);
 			JOptionPane.showMessageDialog(this, "Pasūtījums izveidots!\n\n" + pasutijums);
 			
 		} catch (Exception e) {
@@ -376,7 +403,10 @@ public class Picerija extends JFrame {
 				String pabeigtais = aktiviePasutijumi.remove(indekss);
 				pabeigtie.add(pabeigtais);
 				DarbsArFailu.saglabatPasutijumu(pabeigtais);
+				atskanotSkanu("/skanas/nomnom.wav", false);
 				JOptionPane.showMessageDialog(this, "Pasūtījums pabeigts, dabūsi veselus bonusa 10 centus algā.");
+				
+				
 			}
 		}	
 	}
@@ -401,5 +431,6 @@ public class Picerija extends JFrame {
 					pabeigtie.clear();
 			}
 		}
+
 	}
 }
