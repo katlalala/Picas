@@ -17,4 +17,4 @@ Neliela programma par picām
   - [x] Pabeigt pasūtījumu (iespēja izvēlēties kuru)
 	- [x] skatīt vēsturi (var izdzēst)
 - [x] Ievietoti UI elementi
-- [ ] Ievietotas visas diagrammas
+- [x] Ievietotas visas diagrammas
